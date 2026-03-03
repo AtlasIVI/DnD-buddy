@@ -1,0 +1,117 @@
+/* ============================================================
+   DND BUDDY Global Styles
+   All colors, fonts, effects come from CSS custom properties
+   set by the active theme via ThemeContext.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Code:wght@400;500&family=Cinzel:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  background-image: var(--bg-image, none);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100dvh;
+  transition: var(--transition-slow);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--color-text-primary); line-height: 1.2; }
+h1 { font-size: 1.75rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
+.font-mono { font-family: var(--font-mono); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-background-alt); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+
+.card {
+  background-color: var(--color-surface);
+  background-image: var(--surface-image, none);
+  border: var(--card-border-width) solid var(--color-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+.card:hover { box-shadow: var(--card-shadow-hover); }
+.card--accent { border-color: var(--color-border-accent); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.5rem 1rem; border-radius: var(--button-radius);
+  font-family: var(--font-body); font-size: 0.875rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition); border: 1px solid transparent;
+}
+.btn--primary { background-color: var(--color-accent); color: var(--color-accent-text); }
+.btn--primary:hover { background-color: var(--color-accent-hover); box-shadow: var(--glow-accent); }
+.btn--secondary { background: transparent; color: var(--color-text-primary); border-color: var(--color-border); }
+.btn--secondary:hover { border-color: var(--color-border-accent); background-color: var(--color-surface-hover); }
+.btn--danger { background-color: var(--color-error); color: #fff; }
+.btn--ghost { background: transparent; color: var(--color-text-secondary); border: none; }
+.btn--ghost:hover { color: var(--color-text-primary); background-color: var(--color-surface-hover); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.input {
+  width: 100%; padding: 0.5rem 0.75rem;
+  background-color: var(--color-background-alt); border: 1px solid var(--color-border);
+  border-radius: var(--input-radius); color: var(--color-text-primary);
+  font-family: var(--font-body); font-size: 0.875rem; transition: var(--transition);
+}
+.input:focus { outline: none; border-color: var(--color-border-accent); box-shadow: var(--glow-accent); }
+.input::placeholder { color: var(--color-text-muted); }
+
+.hp-bar { position: relative; width: 100%; height: 0.5rem; background-color: var(--color-hp-background); border-radius: 999px; overflow: hidden; }
+.hp-bar__fill { height: 100%; background-color: var(--color-hp); border-radius: 999px; transition: width 0.5s ease; }
+.hp-bar--large { height: 1rem; }
+
+.badge { display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; font-family: var(--font-mono); }
+.badge--player { background-color: var(--color-player-color); color: #fff; }
+.badge--monster { background-color: var(--color-monster-color); color: #fff; }
+.badge--npc { background-color: var(--color-npc-color); color: #fff; }
+.badge--hidden { background-color: var(--color-hidden-badge); color: var(--color-hidden-badge-text); }
+.badge--positive { background-color: var(--color-success); color: #fff; }
+.badge--negative { background-color: var(--color-error); color: #fff; }
+
+.stat-block { display: flex; flex-direction: column; align-items: center; padding: 0.5rem; min-width: 3.5rem; }
+.stat-block__value { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 600; color: var(--color-text-primary); }
+.stat-block__label { font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
+
+@keyframes flash-damage { 0%, 100% { background-color: transparent; } 50% { background-color: rgba(231,76,60,0.2); } }
+@keyframes flash-heal { 0%, 100% { background-color: transparent; } 50% { background-color: rgba(39,174,96,0.15); } }
+@keyframes pulse-turn { 0%, 100% { box-shadow: 0 0 0 0 var(--color-your-turn); } 50% { box-shadow: 0 0 12px 4px var(--color-your-turn); } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pop-in { 0% { transform: scale(0.8); opacity: 0; } 70% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+
+.animate-damage { animation: flash-damage 0.4s ease; }
+.animate-heal { animation: flash-heal 0.4s ease; }
+.animate-turn { animation: pulse-turn 2s infinite; }
+.animate-fade-in { animation: fade-in 0.3s ease forwards; }
+.animate-pop-in { animation: pop-in 0.3s ease forwards; }
+
+.app-shell { display: flex; flex-direction: column; min-height: 100dvh; }
+.app-content { flex: 1; padding: 1rem; padding-bottom: 5rem; max-width: 48rem; margin: 0 auto; width: 100%; }
+
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; justify-content: space-around; align-items: center;
+  height: 4rem; background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border); z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.bottom-nav__item {
+  display: flex; flex-direction: column; align-items: center; gap: 0.125rem;
+  padding: 0.375rem 0.75rem; color: var(--color-text-muted);
+  font-size: 0.625rem; font-family: var(--font-body);
+  transition: var(--transition); cursor: pointer; background: none; border: none;
+}
+.bottom-nav__item--active { color: var(--color-accent); }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.5rem; }
+  .app-content { padding: 0.75rem; padding-bottom: 5rem; }
+}
