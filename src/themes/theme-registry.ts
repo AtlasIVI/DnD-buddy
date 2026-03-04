@@ -1,5 +1,6 @@
 import type { AppTheme } from './theme.types';
 import medievalGrimoire from './medieval-grimoire';
+import highFantasy from './high-fantasy';
 
 /**
  * Theme Registry
@@ -10,13 +11,12 @@ import medievalGrimoire from './medieval-grimoire';
  */
 export const themeRegistry: Record<string, AppTheme> = {
   'medieval-grimoire': medievalGrimoire,
+  'high-fantasy': highFantasy, // 2. On l'ajoute au registre
   // Future themes:
   // 'dark-arcane': darkArcane,
-  // 'high-fantasy': highFantasy,
   // 'cyberpunk-quest': cyberpunkQuest,
 };
-
-export const defaultThemeName = 'medieval-grimoire';
+export const defaultThemeName = 'high-fantasy'; // 1. On choisit un thème par défaut (celui qui sera utilisé si le nom fourni n'existe pas)
 
 export function getTheme(name: string): AppTheme {
   return themeRegistry[name] ?? themeRegistry[defaultThemeName];
