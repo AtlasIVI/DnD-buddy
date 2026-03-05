@@ -73,15 +73,54 @@ export type Database = {
         Relationships: []
       }
       skills: {
-        Row: { character_id: string; created_at: string; description: string; id: string; is_hidden: boolean; modifier: string; name: string; sort_order: number }
-        Insert: { character_id: string; created_at?: string; description?: string; id?: string; is_hidden?: boolean; modifier?: string; name: string; sort_order?: number }
-        Update: { character_id?: string; created_at?: string; description?: string; id?: string; is_hidden?: boolean; modifier?: string; name?: string; sort_order?: number }
+        Row: {
+          id: string; character_id: string; name: string; description: string
+          modifier: string; is_hidden: boolean; sort_order: number; created_at: string
+          proficiency: Database["public"]["Enums"]["skill_proficiency"]
+          ability: Database["public"]["Enums"]["skill_ability"] | null
+          category: Database["public"]["Enums"]["skill_category"]
+          tags: string[]
+          is_active: boolean
+          action_cost: Database["public"]["Enums"]["skill_action_cost"] | null
+          uses_max: number | null; uses_remaining: number | null
+          rest_reset: Database["public"]["Enums"]["rest_type"] | null
+          stat_bonus_ability: Database["public"]["Enums"]["skill_ability"] | null
+          stat_bonus_value: number | null
+        }
+        Insert: {
+          id?: string; character_id: string; name: string; description?: string
+          modifier?: string; is_hidden?: boolean; sort_order?: number; created_at?: string
+          proficiency?: Database["public"]["Enums"]["skill_proficiency"]
+          ability?: Database["public"]["Enums"]["skill_ability"] | null
+          category?: Database["public"]["Enums"]["skill_category"]
+          tags?: string[]
+          is_active?: boolean
+          action_cost?: Database["public"]["Enums"]["skill_action_cost"] | null
+          uses_max?: number | null; uses_remaining?: number | null
+          rest_reset?: Database["public"]["Enums"]["rest_type"] | null
+          stat_bonus_ability?: Database["public"]["Enums"]["skill_ability"] | null
+          stat_bonus_value?: number | null
+        }
+        Update: {
+          id?: string; character_id?: string; name?: string; description?: string
+          modifier?: string; is_hidden?: boolean; sort_order?: number; created_at?: string
+          proficiency?: Database["public"]["Enums"]["skill_proficiency"]
+          ability?: Database["public"]["Enums"]["skill_ability"] | null
+          category?: Database["public"]["Enums"]["skill_category"]
+          tags?: string[]
+          is_active?: boolean
+          action_cost?: Database["public"]["Enums"]["skill_action_cost"] | null
+          uses_max?: number | null; uses_remaining?: number | null
+          rest_reset?: Database["public"]["Enums"]["rest_type"] | null
+          stat_bonus_ability?: Database["public"]["Enums"]["skill_ability"] | null
+          stat_bonus_value?: number | null
+        }
         Relationships: [{ foreignKeyName: "skills_character_id_fkey"; columns: ["character_id"]; isOneToOne: false; referencedRelation: "characters"; referencedColumns: ["id"] }]
       }
       spell_slots: {
-        Row: { character_id: string; id: string; slot_level: number; slots_total: number; slots_used: number }
-        Insert: { character_id: string; id?: string; slot_level: number; slots_total?: number; slots_used?: number }
-        Update: { character_id?: string; id?: string; slot_level?: number; slots_total?: number; slots_used?: number }
+        Row: { character_id: string; created_at: string; id: string; slot_level: number; slots_total: number; slots_used: number; updated_at: string }
+        Insert: { character_id: string; created_at?: string; id?: string; slot_level: number; slots_total?: number; slots_used?: number; updated_at?: string }
+        Update: { character_id?: string; created_at?: string; id?: string; slot_level?: number; slots_total?: number; slots_used?: number; updated_at?: string }
         Relationships: [{ foreignKeyName: "spell_slots_character_id_fkey"; columns: ["character_id"]; isOneToOne: false; referencedRelation: "characters"; referencedColumns: ["id"] }]
       }
       spells: {
@@ -108,6 +147,11 @@ export type Database = {
       campaign_role: "gm" | "player"
       combat_status: "active" | "ended"
       participant_type: "player" | "monster" | "npc"
+      skill_proficiency: "none" | "proficient" | "expertise"
+      skill_ability: "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA"
+      skill_category: "combat" | "social" | "exploration" | "connaissance" | "classe" | "autre"
+      skill_action_cost: "action" | "bonus_action" | "reaction" | "free"
+      rest_type: "short" | "long"
     }
     CompositeTypes: { [_ in never]: never }
   }
