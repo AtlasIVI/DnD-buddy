@@ -280,9 +280,28 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
   border-radius: var(--button-radius);
 }
 
+
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+/* ── Layout 2 colonnes en mode combat (CharacterSheet) ── */
+/* À ajouter dans src/index.css */
+
+.combat-sheet-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}
+
+/* Sur mobile (< 640px) : 1 colonne empilée */
+@media (max-width: 640px) {
+  .combat-sheet-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 @media (max-width: 640px) {
   h1 { font-size: 1.5rem; }

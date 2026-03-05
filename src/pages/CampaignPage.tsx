@@ -174,6 +174,7 @@ export default function CampaignPage({ campaignId, role, onBack }: CampaignPageP
             charStats={charStats}
             tab={playerTab}
             isGmPreview={isGm && viewMode === 'player'}
+            inCombat={inCombat}
           />
         )}
       </div>
@@ -223,12 +224,13 @@ function GmView({ campaignId, campaign, tab, onBack }: {
 
 // ─── Vue Joueur ───────────────────────────────────────────────────────────────
 
-function PlayerView({ campaignId, characterId, charStats, tab, isGmPreview }: {
+function PlayerView({ campaignId, characterId, charStats, tab, isGmPreview, inCombat }: {
   campaignId: string;
   characterId: string | null;
   charStats: CharStats | undefined;
   tab: PlayerTab;
   isGmPreview?: boolean;
+  inCombat?: boolean;
 }) {
   const canEdit = !isGmPreview;
 
@@ -248,7 +250,7 @@ function PlayerView({ campaignId, characterId, charStats, tab, isGmPreview }: {
       )}
 
       {tab === 'sheet' && (
-        <CharacterSheet campaignId={campaignId} readOnly={isGmPreview} />
+        <CharacterSheet campaignId={campaignId} readOnly={isGmPreview} inCombat={inCombat} />
       )}
 
       {tab === 'spells' && (
