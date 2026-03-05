@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import ThemeSwitcher from "../theme/ThemeSwitcher";
 import { useAuth } from "../../contexts/AuthContext";
+import logo from "../../img/logo.png";
 
 // 1. On définit la structure d'un onglet
 export interface TabItem {
@@ -47,14 +48,17 @@ export default function Layout({
           position: "relative", // <-- AJOUTER CECI
           zIndex: 200           // <-- AJOUTER CECI
         }}>
-          <h1 style={{ 
-            fontFamily: "var(--font-display)", 
-            color: "var(--color-accent)",
-            fontSize: "1.125rem",
-            margin: 0
-          }}>
-            DnD Buddy
-          </h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <img src={logo} alt="DnD Buddy Logo" style={{ height: "2rem", width: "auto" }} />
+            <h1 style={{ 
+              fontFamily: "var(--font-display)", 
+              color: "var(--color-accent)",
+              fontSize: "1.125rem",
+              margin: 0
+            }}>
+              DnD Buddy
+            </h1>
+          </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             <ThemeSwitcher />
