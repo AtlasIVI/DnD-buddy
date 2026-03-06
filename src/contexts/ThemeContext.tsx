@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { AppTheme } from '../themes/theme.types';
 import { getTheme, defaultThemeName } from '../themes/theme-registry';
@@ -25,8 +25,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyThemeToElement(document.documentElement, theme, mode);
   }, [theme, mode]);
 
+  // Stable callback references
+  const setThemeCallback = useCallback((name: string) => setThemeName(name), []);
+  const setModeCallback = useCallback((m: CampaignMode) => setMode(m), []);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo(() => ({
+    theme,
+    themeName,
+    mode,
+    setTheme: setThemeCallback,
+    setMode: setModeCallback,
+  }), [theme, themeName, mode, setThemeCallback, setModeCallback]);
+
   return (
-    <ThemeContext.Provider value={{ theme, themeName, mode, setTheme: setThemeName, setMode }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

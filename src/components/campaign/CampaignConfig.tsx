@@ -3,8 +3,11 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   GiCog, GiKey, GiScrollUnfurled, GiCrossedSwords, GiCompass,
-  GiBroadsword, GiEyeTarget, GiCharacter, GiDeathSkull, GiTrophy, GiTrashCan,
+  GiBroadsword, GiEyeTarget, GiDeathSkull, GiTrophy, GiTrashCan,
 } from 'react-icons/gi';
+import { PlayersCard } from './config/PlayersCard';
+import { ConfirmActionDialog } from './config/ConfirmActionDialog';
+import type { CampaignMember, ConfirmAction } from './config/types';
 
 interface CampaignConfigProps {
   campaignId: string;
@@ -16,15 +19,8 @@ export default function CampaignConfig({ campaignId, campaignMode, onBack }: Cam
   const { user } = useAuth();
   const [inviteCode,    setInviteCode]    = useState('');
   const [gmSeeHidden,   setGmSeeHidden]   = useState(false);
-  const [members,       setMembers]       = useState<Array<{
-    id: string; user_id: string; role: string;
-    profile?: { display_name: string };
-  }>>([]);
-  const [confirmAction, setConfirmAction] = useState<{
-    type: 'kick' | 'delete' | 'end';
-    userId?: string;
-    userName?: string;
-  } | null>(null);
+  const [members, setMembers] = useState<CampaignMember[]>([]);
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -32,7 +28,10 @@ export default function CampaignConfig({ campaignId, campaignMode, onBack }: Cam
       .select('invite_code, gm_see_hidden')
       .eq('id', campaignId).single()
       .then(({ data }) => {
-        if (data) { setInviteCode(data.invite_code); setGmSeeHidden(data.gm_see_hidden); }
+        if (data) {
+          setInviteCode(data.invite_code);
+          setGmSeeHidden(data.gm_see_hidden);
+        }
       });
     fetchMembers();
   }, [campaignId]);
@@ -154,36 +153,16 @@ export default function CampaignConfig({ campaignId, campaignMode, onBack }: Cam
       </div>
 
       {/* Joueurs */}
-      <div className="card">
-        <h3 style={{ fontSize: '0.9375rem', marginBottom: '0.75rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-          <GiCrossedSwords size={16} /> Joueurs ({players.length})
-        </h3>
-        {players.length === 0
-          ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8125rem' }}>Aucun joueur</p>
-          : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-              {players.map(m => (
-                <div key={m.id} style={{
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '0.375rem 0.5rem',
-                  backgroundColor: 'var(--color-background-alt)',
-                  borderRadius: 'var(--button-radius)',
-                }}>
-                  <span style={{ fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                    <GiCharacter size={14} /> {m.profile?.display_name || 'Joueur'}
-                  </span>
-                  <button
-                    className="btn btn--ghost"
-                    onClick={() => setConfirmAction({ type: 'kick', userId: m.user_id, userName: m.profile?.display_name || 'Joueur' })}
-                    style={{ fontSize: '0.6875rem', color: 'var(--color-error)', padding: '0.125rem 0.375rem' }}
-                  >
-                    <GiCrossedSwords size={12} /> Exclure
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-      </div>
+      <PlayersCard
+        players={players}
+        onKick={(member) =>
+          setConfirmAction({
+            type: 'kick',
+            userId: member.user_id,
+            userName: member.profile?.display_name || 'Joueur',
+          })
+        }
+      />
 
       {/* Zone dangereuse */}
       <div className="card" style={{ borderColor: 'var(--color-error)' }}>
@@ -202,70 +181,14 @@ export default function CampaignConfig({ campaignId, campaignMode, onBack }: Cam
 
       {/* Modale de confirmation */}
       {confirmAction && (
-        <div className="confirm-overlay" onClick={() => setConfirmAction(null)}>
-          <div className="confirm-dialog animate-fade-in" onClick={(e) => e.stopPropagation()}>
-
-            {confirmAction.type === 'kick' && (
-              <>
-                <h3 style={{ fontSize: '1.125rem', marginBottom: '0.75rem', color: 'var(--color-error)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                  <GiCrossedSwords /> Exclure un joueur
-                </h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
-                  Exclure <strong>{confirmAction.userName}</strong> ? Son personnage sera supprimé.
-                </p>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button className="btn btn--secondary" onClick={() => setConfirmAction(null)} style={{ flex: 1 }}>Annuler</button>
-                  <button className="btn btn--danger" onClick={() => kickPlayer(confirmAction.userId!)} disabled={busy} style={{ flex: 1 }}>
-                    {busy ? '…' : 'Exclure'}
-                  </button>
-                </div>
-              </>
-            )}
-
-            {confirmAction.type === 'delete' && (
-              <>
-                <h3 style={{ fontSize: '1.125rem', marginBottom: '0.75rem', color: 'var(--color-error)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                  <GiTrashCan /> Supprimer
-                </h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
-                  Toutes les données seront perdues définitivement.
-                </p>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button className="btn btn--secondary" onClick={() => setConfirmAction(null)} style={{ flex: 1 }}>Annuler</button>
-                  <button className="btn btn--danger" onClick={deleteCampaign} disabled={busy} style={{ flex: 1 }}>
-                    {busy ? '…' : 'Supprimer'}
-                  </button>
-                </div>
-              </>
-            )}
-
-            {confirmAction.type === 'end' && (
-              <>
-                <h3 style={{ fontSize: '1.125rem', marginBottom: '0.75rem', color: 'var(--color-warning)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-                  <GiTrophy /> Fin de campagne
-                </h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
-                  Comment se termine cette aventure ?
-                </p>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button className="btn btn--secondary" onClick={() => setConfirmAction(null)} style={{ flex: 1 }}>Annuler</button>
-                  <button
-                    className="btn"
-                    onClick={() => endCampaign('victory')}
-                    disabled={busy}
-                    style={{ flex: 1, backgroundColor: 'var(--color-success)', color: '#fff' }}
-                  >
-                    <GiTrophy size={14} /> {busy ? '…' : 'Victoire'}
-                  </button>
-                  <button className="btn btn--danger" onClick={() => endCampaign('defeat')} disabled={busy} style={{ flex: 1 }}>
-                    <GiDeathSkull size={14} /> {busy ? '…' : 'Défaite'}
-                  </button>
-                </div>
-              </>
-            )}
-
-          </div>
-        </div>
+        <ConfirmActionDialog
+          action={confirmAction}
+          busy={busy}
+          onClose={() => setConfirmAction(null)}
+          onKick={kickPlayer}
+          onDeleteCampaign={deleteCampaign}
+          onEndCampaign={endCampaign}
+        />
       )}
     </div>
   );

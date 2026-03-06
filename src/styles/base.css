@@ -1,0 +1,25 @@
+/* Global base styles */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  background-image: var(--bg-image, none);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100dvh;
+  transition: var(--transition-slow);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--color-text-primary); line-height: 1.2; }
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+.font-mono { font-family: var(--font-mono); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-background-alt); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
