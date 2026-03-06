@@ -29,6 +29,52 @@ h1 { font-size: 1.75rem; } h2 { font-size: 1.5rem; } h3 { font-size: 1.25rem; }
 ::-webkit-scrollbar-track { background: var(--color-background-alt); }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
 
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   Layout combat joueur
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Grille principale : 40% fiche | 60% actions */
+.combat-sheet-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;   /* ~40% | ~60% */
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.combat-sheet-left  { display: flex; flex-direction: column; gap: 0.75rem; }
+.combat-sheet-right { display: flex; flex-direction: column; gap: 0.5rem;  }
+
+/* Sous-grille dans la colonne droite : skills | sorts côte à côte */
+.combat-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+/* Tablette (< 900px) : colonne droite passe en pile */
+@media (max-width: 900px) {
+  .combat-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile (< 640px) : tout en 1 colonne */
+@media (max-width: 640px) {
+  .combat-sheet-grid {
+    grid-template-columns: 1fr;
+  }
+  .combat-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
 /* ============================================================
    CARDS
    ============================================================ */
