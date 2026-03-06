@@ -1,0 +1,71 @@
+/* App shell and navigation */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1rem;
+  max-width: 48rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-shell--with-nav .app-content {
+  padding-bottom: 5rem;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4rem;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.375rem 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  transition: var(--transition);
+  cursor: pointer;
+  background: none;
+  border: none;
+  min-height: 3.5rem;
+  min-width: 3.5rem;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  border-radius: var(--button-radius);
+}
+
+.bottom-nav__item:hover { color: var(--color-text-primary); }
+.bottom-nav__item--active {
+  color: var(--color-accent);
+  background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  border-radius: var(--button-radius);
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.5rem; }
+  .app-content { padding: 0.75rem; }
+  .app-shell--with-nav .app-content { padding-bottom: 5rem; }
+  .input { padding: 0.625rem 0.75rem; }
+  .card { padding: 0.75rem; }
+}

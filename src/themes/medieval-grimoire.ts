@@ -1,4 +1,5 @@
 import type { AppTheme } from './theme.types';
+import medievalGrimoireBg from '../img/MedievalGrimoireBg.png';
 
 /**
  * MEDIEVAL GRIMOIRE — Default theme
@@ -75,7 +76,7 @@ const medievalGrimoire: AppTheme = {
   },
 
   textures: {
-    backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(42,35,24,0.8) 0%, transparent 50%), linear-gradient(180deg, #1a1410 0%, #1e1812 100%)',
+    backgroundImage: `linear-gradient(rgba(26, 20, 16, 0.45), rgba(26, 20, 16, 0.65)), url(${medievalGrimoireBg})`,
     surfaceImage: 'linear-gradient(135deg, rgba(201,168,76,0.03) 0%, transparent 50%)',
   },
 
@@ -94,7 +95,7 @@ const medievalGrimoire: AppTheme = {
       yourTurn: '#f39c12',
     },
     textures: {
-      backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(139,69,69,0.15) 0%, transparent 50%), linear-gradient(180deg, #12101a 0%, #0e0c14 100%)',
+      backgroundImage: `linear-gradient(rgba(18, 16, 26, 0.5), rgba(139, 69, 69, 0.35)), url(${medievalGrimoireBg})`,
     },
   },
 

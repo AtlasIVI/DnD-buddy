@@ -1,4 +1,5 @@
 import type { AppTheme } from './theme.types';
+import highFantasyBg from '../img/HighfantasyBg.png';
 
 /**
  * HIGH FANTASY — Light Medieval Theme
@@ -86,8 +87,8 @@ const highFantasy: AppTheme = {
   },
 
   textures: {
-    // Dégradé léger pour donner un effet papier
-    backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(253,251,247,0.8) 0%, transparent 60%), linear-gradient(180deg, #f4ecd8 0%, #e8dec3 100%)',
+    // Image + voile léger pour conserver la lisibilité
+    backgroundImage: `linear-gradient(rgba(244, 236, 216, 0.45), rgba(232, 222, 195, 0.65)), url(${highFantasyBg})`,
     surfaceImage: 'linear-gradient(135deg, rgba(197,160,89,0.05) 0%, transparent 50%)',
   },
 
@@ -107,7 +108,7 @@ const highFantasy: AppTheme = {
       yourTurn: '#c5a059',
     },
     textures: {
-      backgroundImage: 'radial-gradient(ellipse at 50% 0%, rgba(161,43,43,0.08) 0%, transparent 60%), linear-gradient(180deg, #dcd2c6 0%, #c4b9aa 100%)',
+      backgroundImage: `linear-gradient(rgba(220, 210, 198, 0.5), rgba(196, 185, 170, 0.7)), url(${highFantasyBg})`,
     },
   },
 

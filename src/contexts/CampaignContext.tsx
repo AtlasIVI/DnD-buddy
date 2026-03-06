@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type { Tables } from '../types/database';
 
@@ -21,18 +21,19 @@ export function CampaignProvider({ children }: { children: ReactNode }) {
   const [myRole, setMyRole] = useState<CampaignRole | null>(null);
   const [myCharacter, setMyCharacter] = useState<Tables<'characters'> | null>(null);
 
+  // Memoize context value to prevent unnecessary re-renders
+  const value = useMemo(() => ({
+    campaign,
+    myRole,
+    myCharacter,
+    setCampaign,
+    setMyRole,
+    setMyCharacter,
+    isGM: myRole === 'gm',
+  }), [campaign, myRole, myCharacter]);
+
   return (
-    <CampaignContext.Provider
-      value={{
-        campaign,
-        myRole,
-        myCharacter,
-        setCampaign,
-        setMyRole,
-        setMyCharacter,
-        isGM: myRole === 'gm',
-      }}
-    >
+    <CampaignContext.Provider value={value}>
       {children}
     </CampaignContext.Provider>
   );
