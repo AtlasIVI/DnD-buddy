@@ -30,7 +30,7 @@ export default function HubActionPanels({
   return (
     <>
       <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
-        <button className="btn btn--secondary" style={{ flex: 1 }} onClick={onToggleJoin}>Rejoindre</button>
+        <button className="btn btn--secondary btn--secondary-active" style={{ flex: 1 }} onClick={onToggleJoin}>Rejoindre</button>
         <button className="btn btn--primary" style={{ flex: 1 }} onClick={onToggleCreate}>Nouvelle campagne</button>
       </div>
 

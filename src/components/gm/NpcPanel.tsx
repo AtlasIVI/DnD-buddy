@@ -50,7 +50,7 @@ export default function NpcManager({ campaignId }: NpcManagerProps) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <h2 style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}><GiWolfHead /> PNJ ({npcs.length})</h2>
-        <button className="btn btn--primary" onClick={() => setShowAdd(!showAdd)} style={{ fontSize: '0.8125rem' }}><GiSparkles size={14} /> Ajouter</button>
+        <button className="btn btn--secondary btn--secondary-active" onClick={() => setShowAdd(!showAdd)} style={{ fontSize: '0.8125rem' }}><GiSparkles size={14} /> Ajouter</button>
       </div>
 
       {showAdd && (

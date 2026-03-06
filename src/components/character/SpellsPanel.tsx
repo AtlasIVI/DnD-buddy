@@ -110,7 +110,7 @@ export default function SpellsPanel({ characterId, readOnly, combatMode }: Spell
       <div className="card">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><GiSpellBook size={18} style={{ color: 'var(--color-accent)' }} /><h3 style={{ fontSize: '1rem' }}>Sorts ({spells.length})</h3></div>
-          {!readOnly && <button className="btn btn--ghost" onClick={() => setShowForm(x => !x)} style={{ fontSize: '0.75rem' }}>{showForm ? 'Annuler' : '+ Sort'}</button>}
+          {!readOnly && <button className="btn btn--ghost btn--add-toggle" onClick={() => setShowForm(x => !x)} style={{ fontSize: '0.75rem' }}>{showForm ? 'Annuler' : '+ Sort'}</button>}
         </div>
 
         {showForm && !readOnly && (

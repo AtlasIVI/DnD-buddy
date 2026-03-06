@@ -94,7 +94,7 @@ export default function SkillsList({ characterId, canEdit, charStats }: SkillsLi
           <GiSkills size={20} style={{ color: 'var(--color-accent)' }} />
           <h2 style={{ fontSize: '1.25rem' }}>Compétences ({skills.length})</h2>
         </div>
-        {canEdit && <button className="btn btn--ghost" onClick={() => setShowForm(!showForm)} style={{ fontSize: '0.75rem' }}>{showForm ? 'Annuler' : '+ Compétence'}</button>}
+        {canEdit && <button className="btn btn--ghost btn--add-toggle" onClick={() => setShowForm(!showForm)} style={{ fontSize: '0.75rem' }}>{showForm ? 'Annuler' : '+ Compétence'}</button>}
       </div>
 
       {showForm && canEdit && <SkillForm form={form} setForm={setForm} onAdd={addSkill} />}

@@ -50,7 +50,7 @@ export const EffectsSection: React.FC<EffectsSectionProps> = ({
         </div>
         {!readOnly && (
           <button 
-            className="btn btn--ghost" 
+            className="btn btn--ghost btn--add-toggle" 
             onClick={() => setShowForm(!showForm)} 
             style={{ fontSize: '0.75rem' }}
           >

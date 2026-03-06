@@ -33,11 +33,41 @@
 .btn--primary:active { transform: scale(0.97); }
 .btn--secondary { background: transparent; color: var(--color-text-primary); border-color: var(--color-border); }
 .btn--secondary:hover { border-color: var(--color-border-accent); background-color: var(--color-surface-hover); }
+.btn--secondary-active { background-color: var(--color-surface-hover); color: var(--color-text-primary); border-color: var(--color-border-accent); }
+.btn--secondary-active:hover { background-color: var(--color-surface-hover); color: var(--color-text-primary); border-color: var(--color-border-accent); }
 .btn--danger { background-color: var(--color-error); color: #fff; }
 .btn--danger:active { transform: scale(0.97); }
 .btn--ghost { background: transparent; color: var(--color-text-secondary); border: none; min-height: 2rem; }
 .btn--ghost:hover { color: var(--color-text-primary); background-color: var(--color-surface-hover); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* High-fantasy: make add-toggle ghost actions readable over textured parchment background. */
+:root[data-theme='high-fantasy'] .btn--add-toggle {
+  border: 1px solid var(--color-border-accent);
+  background-color: var(--color-background-alt);
+  color: var(--color-text-primary);
+  box-shadow: 0 1px 4px rgba(44, 36, 27, 0.14);
+}
+
+:root[data-theme='high-fantasy'] .btn--add-toggle:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Medieval-grimoire: keep add-toggle actions visible on dark textured backgrounds. */
+:root[data-theme='medieval-grimoire'] .btn--add-toggle {
+  border: 1px solid var(--color-border-accent);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme='medieval-grimoire'] .btn--add-toggle:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-accent);
+}
 
 .input {
   width: 100%;
